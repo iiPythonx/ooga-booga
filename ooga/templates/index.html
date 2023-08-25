@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8">
+
+        <!-- CSS -->
+        <link rel = "preconnect" href = "https://fonts.googleapis.com">
+        <link rel = "preconnect" href = "https://fonts.gstatic.com" crossorigin>
+        <link href = "https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel = "stylesheet">
+        <style>
+            body {
+                color: white;
+                font-family: "Quicksand", sans-serif;
+                background-color: #000;
+            }
+            div#container {
+                top: 50%;
+                left: 50%;
+                position: absolute;
+                width: 45%;
+                height: 2rem;
+                transform: translateX(-50%) translateY(-50%);
+            }
+            input#input-box:focus {
+                outline: none !important;
+            }
+            input#input-box {
+                width: calc(100% - 24px);
+                height: 100%;
+                color: white;
+                padding: 10px;
+                font-size: 20px;
+                background: none;
+                border: 2px solid white;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+            }
+            span#copied-msg {
+                display: none;
+                margin-top: 10px;
+                text-align: center;
+            }
+        </style>
+
+        <!-- Etc -->
+        <title>Ooga</title>
+    </head>
+    <body>
+        <div id = "container">
+            <input id = "input-box" placeholder = "Enter an URL to shorten and hit ENTER to shorten it." autocomplete = "off">
+            <span id = "copied-msg"></span>
+        </div>
+
+        <!-- JS -->
+        <script>
+            const input = document.getElementById("input-box");
+            const alert = document.getElementById("copied-msg");
+            input.addEventListener("keyup", async (e) => {
+                if (event.key !== "Enter") return;
+                const data = await fetch("/api/shorten", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url: input.value })
+                });
+                const resp = await data.json();
+                alert.style.display = "block";
+                if (resp.error) {
+                    alert.innerText = resp.error;
+                    return;
+                }
+                alert.innerText = "Copied short URL to clipboard!";
+                navigator.clipboard.writeText(`https://${window.location.hostname}/${resp.id}`);
+            });
+        </script>
+    </body>
+</html>

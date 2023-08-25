@@ -1,13 +1,14 @@
-# Python project template
+# Ooga Booga
 
-Hello, world.
+A zero-configuration URL shortener.
 
 ## Installation
 
 - Method #1 (recommended, requires git):
-    - Install via pip:
+    - Clone via git:
         ```sh
-        pip install git+https://github.com/iiPythonx/ooga-booga
+        git clone https://github.com/iiPythonx/ooga-booga
+        cd ooga-booga
         ```
     - Launch following the [usage instructions](#usage).
 
@@ -18,9 +19,9 @@ Hello, world.
 
 ## Usage
 
-To launch in regular mode:
+To launch in production mode (via uvicorn):
 ```sh
-python3 -m template
+python3 -m uvicorn ooga:app
 ```
 
 ## License

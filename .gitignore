@@ -1,2 +1,6 @@
 # Hide all cache
 __pycache__/
+
+# Hide database
+db/*
+!db/.empty
